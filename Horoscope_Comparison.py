@@ -10,3 +10,16 @@ I dont't believe in astrology nor do I affiliate with those website. This scirpt
 statements about your specific daily horoscope.
 """
 
+# base URLs
+astrology = "https://www.astrology.com/"
+horoscope = "https://www.horoscope.com/us/index.aspx"
+astrostyle = "http://astrostyle.com/daily-horoscopes/"
+
+
+#  TODO: Ask for valid star sign
+
+#  TODO: Scrape websites with requests
+
+#  TODO: Select today's horoscope-text with BeautifulSoup
+
+#  TODO: Display content to user
