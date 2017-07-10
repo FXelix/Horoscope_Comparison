@@ -11,22 +11,26 @@ statements about your specific daily horoscope.
 """
 
 
+import requests
+
+
 class HoroscopeComparison:
     # base URLs
-    astrology = "https://www.astrology.com/"
-    horoscope = "https://www.horoscope.com/us/"
-    astrostyle = "http://astrostyle.com/daily-horoscopes/"
+    def __init__(self):
+        self.astrology = "https://www.astrology.com/"
+        self.horoscope = "https://www.horoscope.com/us/"
+        self.astrostyle = "http://astrostyle.com/daily-horoscopes/"
 
-    star_sign = {"Aries": {"astrology": "",
-                           "horoscope": "",
-                           "astrostyle": ""}
-                 }
+        self.star_sign = {"Aries": {"astrology": "horoscope/daily/aries.html",
+                                    "horoscope": "horoscopes/general/horoscope-general-daily-today.aspx?sign=1",
+                                    "astrostyle": "aries-daily-horoscope/"}
+                          }
 
     def user_input(self):
         while True:
             try:
                 user_sign = input("Enter your star sign: ")
-                if user_sign not in HoroscopeComparison.star_sign:
+                if user_sign not in self.star_sign:
                     raise ValueError
             except Exception as exc:
                 print("Enter a valid star sign.")
@@ -34,7 +38,9 @@ class HoroscopeComparison:
             else:
                 return user_sign
 
-#  TODO: Ask for valid star sign
+    def get_content(self):
+        astrology_page = requests.get(self.astrology + self.star_sign[self.user_input()][self.astrology])
+
 
 #  TODO: Scrape websites with requests
 
