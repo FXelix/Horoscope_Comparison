@@ -12,6 +12,7 @@ statements about your specific daily horoscope.
 
 
 import requests
+import bs4
 
 
 class HoroscopeComparison:
@@ -32,7 +33,7 @@ class HoroscopeComparison:
                 user_sign = input("Enter your star sign: ")
                 if user_sign not in self.star_sign:
                     raise ValueError
-            except Exception as exc:
+            except ValueError:
                 print("Enter a valid star sign.")
                 continue
             else:
@@ -40,9 +41,20 @@ class HoroscopeComparison:
 
     def get_content(self):
         astrology_page = requests.get(self.astrology + self.star_sign[self.user_input()][self.astrology])
+        horoscope_page = requests.get(self.horoscope + self.star_sign[self.user_input()][self.horoscope])
+        astrostyle_page = requests.get(self.astrostyle + self.star_sign[self.user_input()][self.astrostyle])
 
+        try:
+            astrology_page.raise_for_status()
+            horoscope_page.raise_for_status()
+            astrostyle_page.raise_for_status()
+        except Exception as exc:
+            print("An Error occured: {}".format(exc))
 
-#  TODO: Scrape websites with requests
+        astrology_soup = bs4.BeautifulSoup(astrology_page.text, "html.parser")
+        horoscope_soup = bs4.BeautifulSoup(horoscope_page.text, "html.parser")
+        astrostyle_soup = bs4.BeautifulSoup(astrology_page.text, "html.parser")
+
 
 #  TODO: Select today's horoscope-text with BeautifulSoup
 
