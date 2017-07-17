@@ -25,7 +25,51 @@ class HoroscopeComparison:
         self.star_sign = {"Aries": {"astrology": "horoscope/daily/aries.html",
                                     "horoscope": "horoscopes/general/horoscope-general-daily-today.aspx?sign=1",
                                     "tarot": "aries",
-                                    }
+                                    },
+                          "Taurus": {"astrology": "horoscope/daily/taurus.html",
+                                     "horoscope": "horoscopes/general/horoscope-general-daily-today.aspx?sign=2",
+                                     "tarot": "taurus",
+                                     },
+                          "Gemini": {"astrology": "horoscope/daily/gemini.html",
+                                     "horoscope": "horoscopes/general/horoscope-general-daily-today.aspx?sign=3",
+                                     "tarot": "gemini",
+                                     },
+                          "Cancer": {"astrology": "horoscope/daily/cancer.html",
+                                     "horoscope": "horoscopes/general/horoscope-general-daily-today.aspx?sign=4",
+                                     "tarot": "cancer",
+                                     },
+                          "Leo":    {"astrology": "horoscope/daily/leo.html",
+                                     "horoscope": "horoscopes/general/horoscope-general-daily-today.aspx?sign=5",
+                                     "tarot": "leo",
+                                     },
+                          "Virgo":  {"astrology": "horoscope/daily/virgo.html",
+                                     "horoscope": "horoscopes/general/horoscope-general-daily-today.aspx?sign=6",
+                                     "tarot": "",
+                                     },
+                          "Libra":  {"astrology": "horoscope/daily/libra.html",
+                                     "horoscope": "horoscopes/general/horoscope-general-daily-today.aspx?sign=7",
+                                     "tarot": "libra",
+                                     },
+                          "Scorpio": {"astrology": "horoscope/daily/scorpio.html",
+                                      "horoscope": "horoscopes/general/horoscope-general-daily-today.aspx?sign=8",
+                                      "tarot": "scorpio",
+                                      },
+                          "Sagittarius": {"astrology": "horoscope/daily/sagittarius.html",
+                                          "horoscope": "horoscopes/general/horoscope-general-daily-today.aspx?sign=9",
+                                          "tarot": "sagittarius",
+                                          },
+                          "Capricorn": {"astrology": "horoscope/daily/capricorn.html",
+                                        "horoscope": "horoscopes/general/horoscope-general-daily-today.aspx?sign=10",
+                                        "tarot": "capricorn",
+                                        },
+                          "Aquarius": {"astrology": "horoscope/daily/aquarius.html",
+                                       "horoscope": "horoscopes/general/horoscope-general-daily-today.aspx?sign=11",
+                                       "tarot": "aquarius",
+                                       },
+                          "Pisces": {"astrology": "horoscope/daily/pisces.html",
+                                     "horoscope": "horoscopes/general/horoscope-general-daily-today.aspx?sign=12",
+                                     "tarot": "pisces",
+                                     },
                           }
 
         self.sign_input = ""
@@ -64,17 +108,19 @@ class HoroscopeComparison:
         tarot_text = tarot_soup.select(".js-today_interp_copy")
 
         print("Astrology.com: \n",
-              astrology_text[0].getText(),"\n")
+              astrology_text[0].getText(), "\n")
 
         print("Horoscope.com: \n",
-              horoscope_text[0].getText(),"\n")
+              horoscope_text[0].getText(), "\n")
 
         print("Tarot.com: \n",
-              tarot_text[0].getText(),"\n")
+              tarot_text[0].getText(), "\n")
 
 
-#  TODO: Print pretty content
+def main():
+    x = HoroscopeComparison()
+    x.user_input()
+    x.get_content()
 
-#  TODO: Add all star signs
-
-#  TODO: Add more websites
+if __name__ == "__main__":
+    main()
