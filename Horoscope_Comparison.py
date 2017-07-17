@@ -4,7 +4,7 @@ This script is about learning requests and BeautifulSoup to scrape websites.
 This script is about your daily horoscope from 3 different websites:
 1. https://www.astrology.com/
 2. https://www.horoscope.com/us/index.aspx
-3. http://astrostyle.com/daily-horoscopes/
+3. "https://www.tarot.com/daily-horoscope/"
 
 I dont't believe in astrology nor do I affiliate with those website. This script just compares their
 statements about your specific daily horoscope.
@@ -20,9 +20,11 @@ class HoroscopeComparison:
     def __init__(self):
         self.astrology = "https://www.astrology.com/"
         self.horoscope = "https://www.horoscope.com/us/"
+        self.tarot = "https://www.tarot.com/daily-horoscope/"
 
         self.star_sign = {"Aries": {"astrology": "horoscope/daily/aries.html",
                                     "horoscope": "horoscopes/general/horoscope-general-daily-today.aspx?sign=1",
+                                    "tarot": "aries",
                                     }
                           }
 
@@ -41,25 +43,35 @@ class HoroscopeComparison:
                 self.sign_input = user_sign
                 break
 
-
     def get_content(self):
         astrology_page = requests.get(self.astrology + self.star_sign[self.sign_input]["astrology"])
         horoscope_page = requests.get(self.horoscope + self.star_sign[self.sign_input]["horoscope"])
+        tarot_page = requests.get(self.tarot + self.star_sign[self.sign_input]["tarot"])
 
         try:
             astrology_page.raise_for_status()
             horoscope_page.raise_for_status()
+            tarot_page.raise_for_status()
         except Exception as exc:
             print("An Error occured: {}".format(exc))
 
         astrology_soup = bs4.BeautifulSoup(astrology_page.text, "html.parser")
         horoscope_soup = bs4.BeautifulSoup(horoscope_page.text, "html.parser")
+        tarot_soup = bs4.BeautifulSoup(tarot_page.text, "html.parser")
 
         astrology_text = astrology_soup.select(".page-horoscope-text")
         horoscope_text = horoscope_soup.select(".horoscope-content p")
+        tarot_text = tarot_soup.select(".js-today_interp_copy")
 
-        print(astrology_text[0].getText())
-        print(horoscope_text[0].getText())
+        print("Astrology.com: \n",
+              astrology_text[0].getText(),"\n")
+
+        print("Horoscope.com: \n",
+              horoscope_text[0].getText(),"\n")
+
+        print("Tarot.com: \n",
+              tarot_text[0].getText(),"\n")
+
 
 #  TODO: Print pretty content
 
