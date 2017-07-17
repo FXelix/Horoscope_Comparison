@@ -20,12 +20,13 @@ class HoroscopeComparison:
     def __init__(self):
         self.astrology = "https://www.astrology.com/"
         self.horoscope = "https://www.horoscope.com/us/"
-        self.astrostyle = "http://astrostyle.com/daily-horoscopes/"
 
         self.star_sign = {"Aries": {"astrology": "horoscope/daily/aries.html",
                                     "horoscope": "horoscopes/general/horoscope-general-daily-today.aspx?sign=1",
-                                    "astrostyle": "aries-daily-horoscope/"}
+                                    }
                           }
+
+        self.sign_input = ""
 
     def user_input(self):
         while True:
@@ -37,30 +38,31 @@ class HoroscopeComparison:
                 print("Enter a valid star sign.")
                 continue
             else:
-                return user_sign
+                self.sign_input = user_sign
+                break
+
 
     def get_content(self):
-        astrology_page = requests.get(self.astrology + self.star_sign[self.user_input()]["astrology"])
-        horoscope_page = requests.get(self.horoscope + self.star_sign[self.user_input()]["horoscope"])
-        astrostyle_page = requests.get(self.astrostyle + self.star_sign[self.user_input()]["astrostyle"])
+        astrology_page = requests.get(self.astrology + self.star_sign[self.sign_input]["astrology"])
+        horoscope_page = requests.get(self.horoscope + self.star_sign[self.sign_input]["horoscope"])
 
         try:
             astrology_page.raise_for_status()
             horoscope_page.raise_for_status()
-            astrostyle_page.raise_for_status()
         except Exception as exc:
             print("An Error occured: {}".format(exc))
 
         astrology_soup = bs4.BeautifulSoup(astrology_page.text, "html.parser")
         horoscope_soup = bs4.BeautifulSoup(horoscope_page.text, "html.parser")
-        astrostyle_soup = bs4.BeautifulSoup(astrology_page.text, "html.parser")
 
         astrology_text = astrology_soup.select(".page-horoscope-text")
         horoscope_text = horoscope_soup.select(".horoscope-content p")
-        astrostyle_text = astrostyle_soup.select(".weekday_div p")
 
+        print(astrology_text[0].getText())
+        print(horoscope_text[0].getText())
 
+#  TODO: Print pretty content
 
-#  TODO: Select today's horoscope-text with BeautifulSoup
+#  TODO: Add all star signs
 
-#  TODO: Display content to user
+#  TODO: Add more websites
