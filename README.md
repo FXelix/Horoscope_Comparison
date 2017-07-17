@@ -6,4 +6,4 @@ This script uses requests and BeautifulSoup to scrape your daily horoscope from 
 I dont't believe in astrology nor do I affiliate with those website. This script just compares their
 statements about your specific daily horoscope.
 
-Version control: major update . minor update . bugfix
+Version control: release version . feature version . minor update
