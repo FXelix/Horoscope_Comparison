@@ -40,9 +40,9 @@ class HoroscopeComparison:
                 return user_sign
 
     def get_content(self):
-        astrology_page = requests.get(self.astrology + self.star_sign[self.user_input()][self.astrology])
-        horoscope_page = requests.get(self.horoscope + self.star_sign[self.user_input()][self.horoscope])
-        astrostyle_page = requests.get(self.astrostyle + self.star_sign[self.user_input()][self.astrostyle])
+        astrology_page = requests.get(self.astrology + self.star_sign[self.user_input()]["astrology"])
+        horoscope_page = requests.get(self.horoscope + self.star_sign[self.user_input()]["horoscope"])
+        astrostyle_page = requests.get(self.astrostyle + self.star_sign[self.user_input()]["astrostyle"])
 
         try:
             astrology_page.raise_for_status()
