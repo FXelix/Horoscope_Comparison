@@ -55,6 +55,11 @@ class HoroscopeComparison:
         horoscope_soup = bs4.BeautifulSoup(horoscope_page.text, "html.parser")
         astrostyle_soup = bs4.BeautifulSoup(astrology_page.text, "html.parser")
 
+        astrology_text = astrology_soup.select(".page-horoscope-text")
+        horoscope_text = horoscope_soup.select(".horoscope-content p")
+        astrostyle_text = astrostyle_soup.select(".weekday_div p")
+
+
 
 #  TODO: Select today's horoscope-text with BeautifulSoup
 
