@@ -22,51 +22,52 @@ class HoroscopeComparison:
         self.horoscope = "https://www.horoscope.com/us/"
         self.tarot = "https://www.tarot.com/daily-horoscope/"
 
-        self.star_sign = {"Aries": {"astrology": "horoscope/daily/aries.html",
+        # matching Star signs to URL snippets
+        self.star_sign = {"aries": {"astrology": "horoscope/daily/aries.html",
                                     "horoscope": "horoscopes/general/horoscope-general-daily-today.aspx?sign=1",
                                     "tarot": "aries",
                                     },
-                          "Taurus": {"astrology": "horoscope/daily/taurus.html",
+                          "taurus": {"astrology": "horoscope/daily/taurus.html",
                                      "horoscope": "horoscopes/general/horoscope-general-daily-today.aspx?sign=2",
                                      "tarot": "taurus",
                                      },
-                          "Gemini": {"astrology": "horoscope/daily/gemini.html",
+                          "gemini": {"astrology": "horoscope/daily/gemini.html",
                                      "horoscope": "horoscopes/general/horoscope-general-daily-today.aspx?sign=3",
                                      "tarot": "gemini",
                                      },
-                          "Cancer": {"astrology": "horoscope/daily/cancer.html",
+                          "cancer": {"astrology": "horoscope/daily/cancer.html",
                                      "horoscope": "horoscopes/general/horoscope-general-daily-today.aspx?sign=4",
                                      "tarot": "cancer",
                                      },
-                          "Leo":    {"astrology": "horoscope/daily/leo.html",
+                          "leo":    {"astrology": "horoscope/daily/leo.html",
                                      "horoscope": "horoscopes/general/horoscope-general-daily-today.aspx?sign=5",
                                      "tarot": "leo",
                                      },
-                          "Virgo":  {"astrology": "horoscope/daily/virgo.html",
+                          "virgo":  {"astrology": "horoscope/daily/virgo.html",
                                      "horoscope": "horoscopes/general/horoscope-general-daily-today.aspx?sign=6",
                                      "tarot": "",
                                      },
-                          "Libra":  {"astrology": "horoscope/daily/libra.html",
+                          "libra":  {"astrology": "horoscope/daily/libra.html",
                                      "horoscope": "horoscopes/general/horoscope-general-daily-today.aspx?sign=7",
                                      "tarot": "libra",
                                      },
-                          "Scorpio": {"astrology": "horoscope/daily/scorpio.html",
+                          "scorpio": {"astrology": "horoscope/daily/scorpio.html",
                                       "horoscope": "horoscopes/general/horoscope-general-daily-today.aspx?sign=8",
                                       "tarot": "scorpio",
                                       },
-                          "Sagittarius": {"astrology": "horoscope/daily/sagittarius.html",
+                          "sagittarius": {"astrology": "horoscope/daily/sagittarius.html",
                                           "horoscope": "horoscopes/general/horoscope-general-daily-today.aspx?sign=9",
                                           "tarot": "sagittarius",
                                           },
-                          "Capricorn": {"astrology": "horoscope/daily/capricorn.html",
+                          "capricorn": {"astrology": "horoscope/daily/capricorn.html",
                                         "horoscope": "horoscopes/general/horoscope-general-daily-today.aspx?sign=10",
                                         "tarot": "capricorn",
                                         },
-                          "Aquarius": {"astrology": "horoscope/daily/aquarius.html",
+                          "aquarius": {"astrology": "horoscope/daily/aquarius.html",
                                        "horoscope": "horoscopes/general/horoscope-general-daily-today.aspx?sign=11",
                                        "tarot": "aquarius",
                                        },
-                          "Pisces": {"astrology": "horoscope/daily/pisces.html",
+                          "pisces": {"astrology": "horoscope/daily/pisces.html",
                                      "horoscope": "horoscopes/general/horoscope-general-daily-today.aspx?sign=12",
                                      "tarot": "pisces",
                                      },
@@ -78,7 +79,7 @@ class HoroscopeComparison:
         while True:
             try:
                 user_sign = input("Enter your star sign: ")
-                if user_sign not in self.star_sign:
+                if user_sign.lower() not in self.star_sign:
                     raise ValueError
             except ValueError:
                 print("Enter a valid star sign.")
@@ -88,25 +89,30 @@ class HoroscopeComparison:
                 break
 
     def get_content(self):
+        # download the website
         astrology_page = requests.get(self.astrology + self.star_sign[self.sign_input]["astrology"])
         horoscope_page = requests.get(self.horoscope + self.star_sign[self.sign_input]["horoscope"])
         tarot_page = requests.get(self.tarot + self.star_sign[self.sign_input]["tarot"])
 
         try:
+            # check if website is reachable
             astrology_page.raise_for_status()
             horoscope_page.raise_for_status()
             tarot_page.raise_for_status()
         except Exception as exc:
             print("An Error occured: {}".format(exc))
 
+        # parse HTML with bs4
         astrology_soup = bs4.BeautifulSoup(astrology_page.text, "html.parser")
         horoscope_soup = bs4.BeautifulSoup(horoscope_page.text, "html.parser")
         tarot_soup = bs4.BeautifulSoup(tarot_page.text, "html.parser")
 
+        #selecht specific text element
         astrology_text = astrology_soup.select(".page-horoscope-text")
         horoscope_text = horoscope_soup.select(".horoscope-content p")
         tarot_text = tarot_soup.select(".js-today_interp_copy")
 
+        # print the found Horoscopes
         print("Astrology.com: \n",
               astrology_text[0].getText(), "\n")
 
